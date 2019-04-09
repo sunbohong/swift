@@ -65,7 +65,7 @@ extension String {
     @usableFromInline
     internal var _guts: _StringGuts
 
-    //@inlinable @inline(__always)
+    @inlinable @inline(__always)
     internal init(_ _guts: _StringGuts) {
       self._guts = _guts
       _invariantCheck()
@@ -75,7 +75,7 @@ extension String {
 
 extension String.UnicodeScalarView {
   #if !INTERNAL_CHECKS_ENABLED
-  //@inlinable @inline(__always) internal func _invariantCheck() {}
+  @inlinable @inline(__always) internal func _invariantCheck() {}
   #else
   @usableFromInline @inline(never) @_effects(releasenone)
   internal func _invariantCheck() {
@@ -91,7 +91,7 @@ extension String.UnicodeScalarView: BidirectionalCollection {
   /// nonempty.
   ///
   /// If the string is empty, `startIndex` is equal to `endIndex`.
-  //@inlinable
+  @inlinable
   public var startIndex: Index {
     @inline(__always) get { return _guts.startIndex }
   }
@@ -100,7 +100,7 @@ extension String.UnicodeScalarView: BidirectionalCollection {
   /// the last valid subscript argument.
   ///
   /// In an empty Unicode scalars view, `endIndex` is equal to `startIndex`.
-  //@inlinable
+  @inlinable
   public var endIndex: Index {
     @inline(__always) get { return _guts.endIndex }
   }
@@ -108,7 +108,7 @@ extension String.UnicodeScalarView: BidirectionalCollection {
   /// Returns the next consecutive location after `i`.
   ///
   /// - Precondition: The next location exists.
-  //@inlinable @inline(__always)
+  @inlinable @inline(__always)
   public func index(after i: Index) -> Index {
     _internalInvariant(i < endIndex)
     // TODO(String performance): isASCII fast-path
@@ -124,7 +124,7 @@ extension String.UnicodeScalarView: BidirectionalCollection {
   /// Returns the previous consecutive location before `i`.
   ///
   /// - Precondition: The previous location exists.
-  //@inlinable @inline(__always)
+  @inlinable @inline(__always)
   public func index(before i: Index) -> Index {
     precondition(i._encodedOffset > 0)
     // TODO(String performance): isASCII fast-path
@@ -156,7 +156,7 @@ extension String.UnicodeScalarView: BidirectionalCollection {
   ///
   /// - Parameter position: A valid index of the character view. `position`
   ///   must be less than the view's end index.
-  //@inlinable
+  @inlinable
   public subscript(position: Index) -> Unicode.Scalar {
     @inline(__always) get {
       String(_guts)._boundsCheck(position)
@@ -178,13 +178,13 @@ extension String.UnicodeScalarView {
     @usableFromInline
     internal var _end: Int
 
-    //@inlinable
+    @inlinable
     internal init(_ guts: _StringGuts) {
       self._end = guts.count
       self._guts = guts
     }
 
-    //@inlinable
+    @inlinable
     @inline(__always)
     public mutating func next() -> Unicode.Scalar? {
       guard _fastPath(_position < _end) else { return nil }
@@ -194,14 +194,14 @@ extension String.UnicodeScalarView {
       return result
     }
   }
-  //@inlinable
+  @inlinable
   public __consuming func makeIterator() -> Iterator {
     return Iterator(_guts)
   }
 }
 
 extension String.UnicodeScalarView: CustomStringConvertible {
- //@inlinable
+ @inlinable
  public var description: String {
    @inline(__always) get { return String(_guts) }
  }
@@ -231,7 +231,7 @@ extension String {
   /// slice of the `picnicGuest.unicodeScalars` view.
   ///
   /// - Parameter unicodeScalars: A collection of Unicode scalar values.
-  //@inlinable @inline(__always)
+  @inlinable @inline(__always)
   public init(_ unicodeScalars: UnicodeScalarView) {
     self.init(unicodeScalars._guts)
   }
@@ -240,7 +240,7 @@ extension String {
   public typealias UnicodeScalarIndex = UnicodeScalarView.Index
 
   /// The string's value represented as a collection of Unicode scalar values.
-  //@inlinable
+  @inlinable
   public var unicodeScalars: UnicodeScalarView {
     @inline(__always) get { return UnicodeScalarView(_guts) }
     @inline(__always) set { _guts = newValue._guts }
@@ -249,7 +249,7 @@ extension String {
 
 extension String.UnicodeScalarView : RangeReplaceableCollection {
   /// Creates an empty view instance.
-  //@inlinable @inline(__always)
+  @inlinable @inline(__always)
   public init() {
     self.init(_StringGuts())
   }

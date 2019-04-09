@@ -394,7 +394,7 @@ extension _StringGuts {
 // result is the sole operation done by a caller, otherwise it's always more
 // efficient to use `withFastUTF8` in the caller.
 extension _StringGuts {
-//  @inlinable @inline(__always)
+  @inlinable @inline(__always)
   internal func errorCorrectedScalar(
     startingAt i: Int
   ) -> (Unicode.Scalar, scalarLength: Int) {
@@ -404,7 +404,7 @@ extension _StringGuts {
     return foreignErrorCorrectedScalar(
       startingAt: String.Index(_encodedOffset: i))
   }
-//  @inlinable @inline(__always)
+  @inlinable @inline(__always)
   internal func errorCorrectedCharacter(
     startingAt start: Int, endingAt end: Int
   ) -> Character {
