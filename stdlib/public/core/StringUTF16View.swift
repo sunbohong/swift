@@ -103,7 +103,7 @@ extension String {
     @usableFromInline
     internal var _guts: _StringGuts
 
-    @inlinable
+    //@inlinable
     internal init(_ guts: _StringGuts) {
       self._guts = guts
       _invariantCheck()
@@ -113,7 +113,7 @@ extension String {
 
 extension String.UTF16View {
   #if !INTERNAL_CHECKS_ENABLED
-  @inlinable @inline(__always) internal func _invariantCheck() {}
+  //@inlinable @inline(__always) internal func _invariantCheck() {}
   #else
   @usableFromInline @inline(never) @_effects(releasenone)
   internal func _invariantCheck() {
@@ -128,7 +128,7 @@ extension String.UTF16View: BidirectionalCollection {
 
   /// The position of the first code unit if the `String` is
   /// nonempty; identical to `endIndex` otherwise.
-  @inlinable
+  //@inlinable
   public var startIndex: Index {
     @inline(__always) get { return _guts.startIndex }
   }
@@ -137,12 +137,12 @@ extension String.UTF16View: BidirectionalCollection {
   /// the last valid subscript argument.
   ///
   /// In an empty UTF-16 view, `endIndex` is equal to `startIndex`.
-  @inlinable
+  //@inlinable
   public var endIndex: Index {
     @inline(__always) get { return _guts.endIndex }
   }
 
-  @inlinable @inline(__always)
+  //@inlinable @inline(__always)
   public func index(after i: Index) -> Index {
     if _slowPath(_guts.isForeign) { return _foreignIndex(after: i) }
     if _guts.isASCII { return i.nextEncoded }
@@ -156,7 +156,7 @@ extension String.UTF16View: BidirectionalCollection {
     return i.strippingTranscoding.encoded(offsetBy: len)
   }
 
-  @inlinable @inline(__always)
+  //@inlinable @inline(__always)
   public func index(before i: Index) -> Index {
     precondition(!i.isZeroPosition)
     if _slowPath(_guts.isForeign) { return _foreignIndex(before: i) }
@@ -222,7 +222,7 @@ extension String.UTF16View: BidirectionalCollection {
     return upper &- lower
   }
 
-  @inlinable
+  //@inlinable
   public var count: Int {
     if _slowPath(_guts.isForeign) {
       return _foreignCount()
@@ -242,7 +242,7 @@ extension String.UTF16View: BidirectionalCollection {
   ///
   /// - Parameter position: A valid index of the view. `position` must be
   ///   less than the view's end index.
-  @inlinable
+  //@inlinable
   public subscript(i: Index) -> UTF16.CodeUnit {
     @inline(__always) get {
       String(_guts)._boundsCheck(i)
@@ -281,13 +281,13 @@ extension String.UTF16View {
     @usableFromInline
     internal var _nextIsTrailingSurrogate: UInt16? = nil
 
-    @inlinable
+    //@inlinable
     internal init(_ guts: _StringGuts) {
       self._end = guts.count
       self._guts = guts
     }
 
-    @inlinable
+    //@inlinable
     public mutating func next() -> UInt16? {
       if _slowPath(_nextIsTrailingSurrogate != nil) {
         let trailing = self._nextIsTrailingSurrogate._unsafelyUnwrappedUnchecked
@@ -306,7 +306,7 @@ extension String.UTF16View {
       return UInt16(truncatingIfNeeded: scalar.value)
     }
   }
-  @inlinable
+  //@inlinable
   public __consuming func makeIterator() -> Iterator {
     return Iterator(_guts)
   }
@@ -314,7 +314,7 @@ extension String.UTF16View {
 
 
 extension String.UTF16View: CustomStringConvertible {
-  @inlinable
+  //@inlinable
   public var description: String {
     @inline(__always) get { return String(_guts) }
   }
@@ -328,14 +328,14 @@ extension String.UTF16View: CustomDebugStringConvertible {
 
 extension String {
   /// A UTF-16 encoding of `self`.
-  @inlinable
+  //@inlinable
   public var utf16: UTF16View {
     @inline(__always) get { return UTF16View(_guts) }
     @inline(__always) set { self = String(newValue._guts) }
   }
 
   /// Creates a string corresponding to the given sequence of UTF-16 code units.
-  @inlinable @inline(__always)
+  //@inlinable @inline(__always)
   @available(swift, introduced: 4.0)
   public init(_ utf16: UTF16View) {
     self.init(utf16._guts)
@@ -500,7 +500,7 @@ extension String.Index {
 // Breadcrumb-aware acceleration
 extension String.UTF16View {
   // A simple heuristic we can always tweak later. Not needed for correctness
-  @inlinable
+  //@inlinable
   internal var _shortHeuristic: Int {  @inline(__always) get { return 32 } }
 
   @usableFromInline

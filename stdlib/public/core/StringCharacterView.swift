@@ -35,7 +35,7 @@ extension String: BidirectionalCollection {
   /// The position of the first character in a nonempty string.
   ///
   /// In an empty string, `startIndex` is equal to `endIndex`.
-  @inlinable
+  //@inlinable
   public var startIndex: Index {
     @inline(__always) get { return _guts.startIndex }
   }
@@ -44,7 +44,7 @@ extension String: BidirectionalCollection {
   /// than the last valid subscript argument.
   ///
   /// In an empty string, `endIndex` is equal to `startIndex`.
-  @inlinable
+  //@inlinable
   public var endIndex: Index {
     @inline(__always) get { return _guts.endIndex }
   }
@@ -109,7 +109,7 @@ extension String: BidirectionalCollection {
   ///   to `index(before:)`.
   ///
   /// - Complexity: O(*n*), where *n* is the absolute value of `n`.
-  @inlinable @inline(__always)
+  //@inlinable @inline(__always)
   public func index(_ i: Index, offsetBy n: IndexDistance) -> Index {
     // TODO: known-ASCII and single-scalar-grapheme fast path, etc.
     return _index(i, offsetBy: n)
@@ -152,7 +152,7 @@ extension String: BidirectionalCollection {
   ///   the method returns `nil`.
   ///
   /// - Complexity: O(*n*), where *n* is the absolute value of `n`.
-  @inlinable @inline(__always)
+  //@inlinable @inline(__always)
   public func index(
     _ i: Index, offsetBy n: IndexDistance, limitedBy limit: Index
   ) -> Index? {
@@ -169,7 +169,7 @@ extension String: BidirectionalCollection {
   /// - Returns: The distance between `start` and `end`.
   ///
   /// - Complexity: O(*n*), where *n* is the resulting distance.
-  @inlinable @inline(__always)
+  //@inlinable @inline(__always)
   public func distance(from start: Index, to end: Index) -> IndexDistance {
     // TODO: known-ASCII and single-scalar-grapheme fast path, etc.
     return _distance(from: start, to: end)
@@ -190,7 +190,7 @@ extension String: BidirectionalCollection {
   ///
   /// - Parameter i: A valid index of the string. `i` must be less than the
   ///   string's end index.
-  @inlinable
+//  //@inlinable
   public subscript(i: Index) -> Character {
     @inline(__always) get {
       _boundsCheck(i)
@@ -202,7 +202,7 @@ extension String: BidirectionalCollection {
     }
   }
 
-  @inlinable @inline(__always)
+  //@inlinable @inline(__always)
   internal func _characterStride(startingAt i: Index) -> Int {
     // Fast check if it's already been measured, otherwise check resiliently
     if let d = i.characterStride { return d }
@@ -212,7 +212,7 @@ extension String: BidirectionalCollection {
     return _guts._opaqueCharacterStride(startingAt: i._encodedOffset)
   }
 
-  @inlinable @inline(__always)
+  //@inlinable @inline(__always)
   internal func _characterStride(endingAt i: Index) -> Int {
     if i == startIndex { return 0 }
 
@@ -232,13 +232,13 @@ extension String {
     @usableFromInline
     internal var _end: Int
 
-    @inlinable
+    //@inlinable
     internal init(_ guts: _StringGuts) {
       self._end = guts.count
       self._guts = guts
     }
 
-    @inlinable
+    //@inlinable
     public mutating func next() -> Character? {
       guard _fastPath(_position < _end) else { return nil }
 
@@ -251,7 +251,7 @@ extension String {
     }
   }
 
-  @inlinable
+  //@inlinable
   public __consuming func makeIterator() -> Iterator {
     return Iterator(_guts)
   }
