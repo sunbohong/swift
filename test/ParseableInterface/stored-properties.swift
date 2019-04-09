@@ -49,8 +49,7 @@ public struct HasStoredProperties {
   // COMMON-NEXT: }
   public private(set) var storedPrivateSet: Int
 
-  // CHECK: private var privateVar: [[BOOL]]
-  // RESILIENT-NOT: private var privateVar: [[BOOL]]
+  // CHECK: private var _: [[BOOL]]
   private var privateVar: Bool
 
   // CHECK: @_hasStorage @_hasInitialValue public var storedWithObserversInitialValue: [[INT]] {
